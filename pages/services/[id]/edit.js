@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import ROUTES from "../../../src/config/routes";
 import ServiceService from "../../../src/services/ServiceService";
 import CategoryService from "../../../src/services/CategoryService";
+import { Button, Container, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import Styles from '../../../styles/Styles.module.css'
 
 function EditService() {
   const router = useRouter();
@@ -41,49 +43,59 @@ function EditService() {
   if (!service || !categories.length) return `Carregando...`
 
   return (
-    <>
-      <p>Página de Edição do artigo: {id}</p>
-      <p>
-        <Link
-          href={{
-            pathname: ROUTES.services.list,
-          }}
-        >
-          <a>Cancelar</a>
-        </Link>
-      </p>
+    <Container>
+      <h2>Página de Edição de Serviços: {id}</h2>
 
       <form onSubmit={handleSubmit((data) => updateService(data))}>
-        <div className="field">
-          <label>Description</label>
-          <input {...register("description", { required: true })} defaultValue={service.description} />
-          {errors.description && <p>description is required.</p>}
+        <div className={Styles.spaceTop}>
+          <TextField label="Description" fullWidth 
+          {
+            ...register("description",
+            { required: true }
+            )
+          } 
+            defaultValue={service.description} />
+          {errors.description && <p className={Styles.msgRequired}> description is required.</p>}
         </div>
 
-        <div className="field">
-          <label>Type</label>
-          <input {...register("service_type", { required: true })} defaultValue={service.service_type} />
-          {errors.service_type && <p>service type is required.</p>}
+        <div className={Styles.spaceTop}>
+          <TextField label="Type" fullWidth {...register("service_type", { required: true })} defaultValue={service.service_type} />
+          {errors.service_type && <p className={Styles.msgRequired}>service type is required.</p>}
         </div>
 
-        <div className="field">
-          <label>Category</label>
-          <select {...register("category_id", { pattern: /\d/ })} defaultValue={service.category_id}>
-            <option>Select Category</option>
-            {categories.map((category) => {
-              return (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              );
-            })}
-          </select>
-          {errors.category_id && <p>Category is required.</p>}
+        <div className={Styles.spaceTop}>
+          <FormControl fullWidth>
+            <InputLabel>Category</InputLabel>
+            <Select {...register("category_id", { pattern: /\d/ })} defaultValue={service.category_id}>
+              {categories.map((category) => {
+                return (
+                  <MenuItem key={category.id} value={category.id}>
+                    {category.name}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+          {errors.category_id && <p className={Styles.msgRequired}>Category is required.</p>}
+
         </div>
 
-        <input type="submit" />
+        <div className={Styles.spaceTop}>
+          <div className={Styles.inline}>
+            <Button variant="contained" type="submit" > Atualizar </Button>
+          </div>
+          <div className={Styles.inline}>
+            <Link
+              href={{
+                pathname: ROUTES.services.list,
+              }}
+            >
+              <Button variant="outlined">Cancelar</Button>
+            </Link>
+          </div>
+        </div>
       </form>
-    </>
+    </Container>
   );
 }
 

@@ -1,0 +1,14 @@
+.spaceTop{
+    margin-top: 20px;
+}
+
+.inline{
+    margin-right: 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.msgRequired{
+    font-size: bold;
+    color: #f01e2c;
+}

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 // Libs
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { toast } from "react-toastify";
 
 // Material Icons
@@ -58,10 +58,10 @@ function ServiceList() {
   return (
     <Container fluid>
       <Grid container mt={2}>
-        <Grid xs={6}>
+        <Grid xs={8}>
             <Typography variant="h4">Services List</Typography>
         </Grid>
-        <Grid xs={6}>
+        <Grid xs={4}>
           <p>
             <Link
               href={{
@@ -75,58 +75,61 @@ function ServiceList() {
           </p>
         </Grid>
         <Grid xs={12}>
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Description</th>
-                <th>Category</th>
-                <th>Type Service</th>
-                <th>&nbsp;</th>
-              </tr>
-            </thead>
-            <tbody>
-              {services.map((service) => {
-                return (
-                  <tr key={service.id}>
-                    <td>{service.id}</td>
-                    <td>{service.description}</td>
-                    <td>{service.category.name}</td>
-                    <td>{service.service_type}</td>
-                    <td>
-                      <Link
-                        href={{
-                          pathname: ROUTES.services.show,
-                          query: {
-                            id: service.id,
-                          },
-                        }}
-                      >
-                        <Button variant="contained" size="small">
-                          <VisibilityIcon fontSize="small" />
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>ID</TableCell>
+                  <TableCell>Description</TableCell>
+                  <TableCell>Category</TableCell>
+                  <TableCell>Type Service</TableCell>
+                  <TableCell>&nbsp;</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {services.map((service) => {
+                  return (
+                    <TableRow key={service.id}>
+                      <TableCell>{service.id}</TableCell>
+                      <TableCell>{service.description}</TableCell>
+                      <TableCell>{service.category.name}</TableCell>
+                      <TableCell>{service.service_type}</TableCell>
+                      <TableCell>
+                        <Link
+                          href={{
+                            pathname: ROUTES.services.show,
+                            query: {
+                              id: service.id,
+                            },
+                          }}
+                        >
+                          <Button variant="contained" size="small">
+                            <VisibilityIcon fontSize="small" />
+                          </Button>
+                        </Link>
+                        <Link
+                          href={{
+                            pathname: ROUTES.services.edit,
+                            query: {
+                              id: service.id,
+                            },
+                          }}
+                        >
+                          <Button variant="contained" color="warning" size="small">
+                            <EditIcon fontSize="small" />
+                          </Button>
+                        </Link>
+                        <Button variant="contained" color="error" size="small" onClick={() => deleteService(service)}>
+                          <DeleteForeverIcon fontSize="small" />
                         </Button>
-                      </Link>
-                      <Link
-                        href={{
-                          pathname: ROUTES.services.edit,
-                          query: {
-                            id: service.id,
-                          },
-                        }}
-                      >
-                        <Button variant="contained" color="warning" size="small">
-                          <EditIcon fontSize="small" />
-                        </Button>
-                      </Link>
-                      <Button variant="contained" color="error" size="small" onClick={() => deleteService(service)}>
-                        <DeleteForeverIcon fontSize="small" />
-                      </Button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
         </Grid>
       </Grid>
     </Container>

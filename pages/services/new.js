@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import ROUTES from "../../src/config/routes";
 import ServiceService from "../../src/services/ServiceService";
 import CategoryService from "../../src/services/CategoryService";
+import { Button, Container, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import Styles from '../../styles/Styles.module.css'
 
 function NewService() {
   const router = useRouter()
@@ -29,48 +31,56 @@ function NewService() {
   }, []);
 
   return (
-    <>
-      <p>Tela de Cadastro de Serviço</p>
-      <p>
-        <Link
-          href={{
-            pathname: ROUTES.services.list,
-          }}
-        >
-          <a>Cancelar</a>
-        </Link>
-      </p>
+    <Container>
+      <h1>Tela de Cadastro de Serviço</h1>
+
 
       <form onSubmit={handleSubmit((data) => insertService(data))}>
-        <div className="field">
-          <label>Description</label>
-          <input {...register("description", { required: true })} />
+        <div className={Styles.spaceTop}>
+          <TextField fullWidth label="Description" {...register("description", { required: true })} />
           {errors.description && <p>description is required.</p>}
         </div>
 
-        <div className="field">
-          <label>Service Type</label>
-          <input {...register("service_type", { required: true })} />
+        <div className={Styles.spaceTop}>
+          <TextField fullWidth label="Type" {...register("service_type", { required: true })} />
           {errors.service_type && <p>Service Type is required.</p>}
         </div>
 
-        <div className="field">
-          <label>Category</label>
-          <select {...register("category_id", { pattern: /\d/ })}>
-          <option>Select Category</option>
-            {
-              categories.map((category) => {
-                return <option key={category.id} value={category.id}>{category.name}</option>
-              })
-            }
-          </select>
+        <div className={Styles.spaceTop}>
+          <FormControl fullWidth>
+            <InputLabel>Category</InputLabel>
+            <Select {...register("category_id", { pattern: /\d/ })}>
+                {
+                  categories.map((category) => {
+                    return <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
+                  })
+                }
+            </Select>
+          </FormControl>
+
           {errors.category_id && <p>Category is required.</p>}
         </div>
 
 
-        <input type="submit" />
+        <div className={Styles.spaceTop}>
+            <div className={Styles.inline}>
+              <Button variant="contained" type="submit"> 
+                Enviar 
+              </Button>
+            </div>
+            <div className={Styles.inline}>
+              <Link
+                  href={{
+                    pathname: ROUTES.categories.list,
+                  }}
+                >
+                  <Button variant="outlined">Cancelar</Button>
+              </Link>
+            </div>
+          </div>
+
       </form>
-    </>
+    </Container>
   );
 }
 

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 // Libs
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography, Table, TableHead, TableBody, TableContainer, TableRow, TableCell } from "@mui/material";
 import { toast } from "react-toastify";
 
 // Material Icons
@@ -17,6 +17,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import ROUTES from "../../src/config/routes";
 import CategoryService from "../../src/services/CategoryService";
 import { Container } from "@mui/system";
+
 
 function CategoryList() {
   const { router } = useRouter();
@@ -58,10 +59,10 @@ function CategoryList() {
   return (
     <Container fluid>
       <Grid container mt={2}>
-        <Grid xs={6}>
+        <Grid xs={8}>
             <Typography variant="h4">Categories List</Typography>
         </Grid>
-        <Grid xs={6}>
+        <Grid xs={4}>
           <p>
             <Link
               href={{
@@ -75,54 +76,56 @@ function CategoryList() {
           </p>
         </Grid>
         <Grid xs={12}>
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>name</th>
-                <th>&nbsp;</th>
-              </tr>
-            </thead>
-            <tbody>
-              {categories.map((category) => {
-                return (
-                  <tr key={category.id}>
-                    <td>{category.id}</td>
-                    <td>{category.name}</td>
-                    <td>
-                      <Link
-                        href={{
-                          pathname: ROUTES.categories.show,
-                          query: {
-                            id: category.id,
-                          },
-                        }}
-                      >
-                        <Button variant="contained" size="small">
-                          <VisibilityIcon fontSize="small" />
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>ID</TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>&nbsp;</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {categories.map((category) => {
+                  return (
+                    <TableRow key={category.id}>
+                      <TableCell>{category.id}</TableCell>
+                      <TableCell>{category.name}</TableCell>
+                      <TableCell>
+                        <Link
+                          href={{
+                            pathname: ROUTES.categories.show,
+                            query: {
+                              id: category.id,
+                            },
+                          }}
+                        >
+                          <Button variant="contained" size="small">
+                            <VisibilityIcon fontSize="small" />
+                          </Button>
+                        </Link>
+                        <Link
+                          href={{
+                            pathname: ROUTES.categories.edit,
+                            query: {
+                              id: category.id,
+                            },
+                          }}
+                        >
+                          <Button variant="contained" color="warning" size="small">
+                            <EditIcon fontSize="small" />
+                          </Button>
+                        </Link>
+                        <Button variant="contained" color="error" size="small" onClick={() => deleteCategory(category)}>
+                          <DeleteForeverIcon fontSize="small" />
                         </Button>
-                      </Link>
-                      <Link
-                        href={{
-                          pathname: ROUTES.categories.edit,
-                          query: {
-                            id: category.id,
-                          },
-                        }}
-                      >
-                        <Button variant="contained" color="warning" size="small">
-                          <EditIcon fontSize="small" />
-                        </Button>
-                      </Link>
-                      <Button variant="contained" color="error" size="small" onClick={() => deleteCategory(category)}>
-                        <DeleteForeverIcon fontSize="small" />
-                      </Button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Grid>
       </Grid>
     </Container>

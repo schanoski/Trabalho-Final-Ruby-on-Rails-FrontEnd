@@ -1,8 +1,11 @@
+import { Button, TextField } from "@mui/material";
+import { Container } from "@mui/system";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ROUTES from "../../../src/config/routes";
 import ServiceService from "../../../src/services/ServiceService";
+import Styles from '../../../styles/Styles.module.css'
 
 function ShowService() {
   const router = useRouter()
@@ -19,35 +22,61 @@ function ShowService() {
   if (!service) return `Carregando...`
 
   return (
-    <>
-      <p>Exibindo o serviço: {id}</p>
+    <Container>
+      <h1>Exibindo o serviço: {id}</h1>
 
-      <p>
+      <div>
+        <div className={Styles.spaceTop}>
+            <TextField fullWidth
+                disabled
+                id="standard-disabled"
+                label="ID"
+                defaultValue={service.id}
+                variant="standard"
+              />
+          </div>
+
+          <div className={Styles.spaceTop}>
+            <TextField fullWidth
+                disabled
+                id="standard-disabled"
+                label="Description"
+                defaultValue={service.description}
+                variant="standard"
+              />
+          </div>
+
+          <div className={Styles.spaceTop}>
+            <TextField fullWidth
+                disabled
+                id="standard-disabled"
+                label="Type"
+                defaultValue={service.service_type}
+                variant="standard"
+              />
+          </div>
+          <div className={Styles.spaceTop}>
+            <TextField fullWidth
+                disabled
+                id="standard-disabled"
+                label="Category"
+                defaultValue={service.category.name}
+                variant="standard"
+              />
+          </div>
+      </div>
+
+      <div className={Styles.spaceTop}>
         <Link
-          href={{
-            pathname: ROUTES.services.list,
-          }}
-        >
-          <a>Voltar</a>
-        </Link>
-      </p>
+            href={{
+              pathname: ROUTES.services.list,
+            }}
+          >
+            <Button variant="outlined">Voltar</Button>
+          </Link>
+      </div>
 
-      <dl>
-        <dt>ID</dt>
-        <dd>{service.id}</dd>
-
-        <dt>Title</dt>
-        <dd>{service.description}</dd>
-
-        <dt>Service Type</dt>
-        <dd>{service.service_type}</dd>
-
-        <dt>Category</dt>
-        <dd>{service.category.name}</dd>
-
-      </dl>
-
-    </>
+    </Container>
   );
 }
 
