@@ -10,7 +10,8 @@ const ROUTES = {
       new: `/categories/new`,
       show: `/categories/[id]`,
       edit: `/categories/[id]/edit`,        
-    }
+    },
+    home: `/`
   };
   
   export default ROUTES;
