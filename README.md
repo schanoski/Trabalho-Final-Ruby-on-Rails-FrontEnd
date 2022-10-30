@@ -1,6 +1,11 @@
-### Projeto fina
+### Projeto final da disciplina Ruby on Rails
 
-## Getting Started
+## Para iniciar
+
+Para instalar as dependencias do projeto é necessário executar o seguinte comando:
+```bash
+npm install
+```
 
 Para executar o projeto execute o seguinte comando:
 
